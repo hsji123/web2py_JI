@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" http-equiv="Refresh" content="600">
+    <title>Uren's board</title>
+      <link rel="stylesheet" type="text/css" href="{{=URL('static', 'css/bootstrap.css')}}">
+      <link rel="stylesheet" type="text/css" href="{{=URL('static', 'css/index.css')}}">
+      <script type="text/javascript" src="{{=URL('static', 'js/amcharts.js')}}"></script>
+      <script type="text/javascript" src="{{=URL('static', 'js/serial.js')}}"></script>
+
+    </head>
+
+  <body>
+      <!-- navbar -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="navbar-header">
+      <a class="navbar-brand" href="http://54.92.85.181/testJI">Uren's board</a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="menu-item"><a href="#profile-header">Profile</a></li>
+      <li class="menu-item"><a href="#development-header">Development</a></li>
+      <li class="menu-item"><a href="#contact-header">Contact</a></li>
+    </ul>
+  </div>
+
+</nav>
+      <!-- main content -->
+<div class="container">
+  <!-- introduction -->
+  <div class="jumbotron">
+    <h1>Hell world, Bro!</h1>
+</div>
+  <!-- profile -->
+  <div id="profile-header" class="page-header">
+    <h1>Profile</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div id="profile-description" class="col-md-4">
+    <img id="profile-photo" src="https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/10885572_705312399564922_1362628330001360297_n.jpg?oh=44428f7463e4283181cc797c47d6777e&oe=5584FEDF" class="img-circle">
+      <h3>Uren's profile</h3>
+      <br>
+      <p><strong>지해성</strong></p>
+        <p>1990/09/27</p>
+      <p>건국대학교 전자공학부 09학번</p>
+      <p>전자부품연구원 위촉연구원</p>
+
+    </div>
+      <div class="col-md-4">
+    </div>
+  </div>
+
+     <!-- development -->
+  <div id="development-header" class="page-header">
+    <h1>Development</h1>
+  </div>
+  <div class="row">
+    <!-- thumbnail #0 -->
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>미세먼지 지역별 수치</h3>
+          <p>에어코리아 홈페이지 데이터 파싱</p>
+        </div>
+        {{=pnt}}
+        {{=pnt2}}
+        {{=pnt3}}
+      </div>
+    </div>
+
+    <!-- thumbnail #1 -->
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>재실감지 그래프</h3>
+          <p>Coming soon!!!</p>
+        </div>
+        <div id="chartdiv"></div>
+          
+      </div>
+    </div>
+
+    <!-- thumbnail #2 -->
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>Smart Indoor 1.5</h3>
+          <p>Coming soon!!!</p>
+        </div>
+        <img src="{{=URL('static', 'images/loading.PNG')}}" class="img-rounded">
+      </div>
+    </div>
+  </div>
+    
+  <!-- contact -->
+  <div id="contact-header" class="page-header">
+    <h1>Contact</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+        <img id="card" src="{{=URL('static', 'images/card.PNG')}}">
+    </div>
+    <div class="col-md-4">
+      <div class="list-group">
+        <a class="list-group-item" target="_blank">(+82)10-9688-6656</a>
+        <a class="list-group-item" target="_blank">hsji123@naver.com</a>
+          <a href="http://www.facebook.com/uren0927" class="list-group-item" target="_blank">http://www.facebook.com/uren0927</a>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+    
+  </div>
+      
+  </body>
+</html>

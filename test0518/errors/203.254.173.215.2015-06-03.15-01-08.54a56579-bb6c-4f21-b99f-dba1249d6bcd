@@ -1,0 +1,946 @@
+(dp1
+S'output'
+p2
+S"<class 'httplib.BadStatusLine'> ''"
+p3
+sS'layer'
+p4
+S'/home/www-data/web2py/applications/test0518/controllers/default.py'
+p5
+sS'code'
+p6
+S'import os\nimport sys\nimport urllib2\nimport httplib\nimport time\nconn = httplib.HTTPConnection("192.168.0.16")\ndata =\'\'\nco2 = \'\'\ndef getWebpage(url, referer=\'\'):\n    debug = 0\n    if debug:\n        return file(url.split(\'/\')[-1], \'rt\').read()\n    else:\n        opener = urllib2.build_opener()\n        opener.addheaders = [\n            (\'User-Agent\', \'Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US)\'),\n            (\'Referer\', referer),\n        ]\n        return opener.open(url).read()\n\ndef getDataPage():\n    return getWebpage(\'http://www.airkorea.or.kr/index\')\n    #url \xea\xb0\x80\xec\xa0\xb8\xec\x98\xa4\xea\xb8\xb0\n    \ndef normailize(s):\n    return s.replace(\'<td>\',\'\').replace(\'</td>\',\'\').replace(\' \',\'\')\n    #\xeb\xb6\x88\xed\x95\x84\xec\x9a\x94\xed\x95\x9c \xec\xbd\x94\xeb\x93\x9c \xec\xa0\x9c\xea\xb1\xb0\ndef printUsing():\n    print sys.argv[0], \'<output file name>\'\n\ndef getDatetime(buffers):\n    return buffers.split(\'<p class="now_time">\')[1].split(\'<strong>\')[1].split(\'</strong>\')[0]\n    #url \xec\x86\x8c\xec\x8a\xa4\xec\x97\x90\xec\x84\x9c \xeb\x82\xa0\xec\xa7\x9c \xeb\xb6\x80\xeb\xb6\x84 \xec\xb6\x94\xec\xb6\x9c\ndef getDatablocks(buffers):\n    a = buffers.split(\'<tbody id="mt_mmc2_10007">\')[1]\n    b = a.split(\'</tbody>\')[0].replace(\'<tr>\',\'\').replace(\'</tr>\',\'\').replace(\'</td>\',\'\')\n    r = \'\'\n    for line in b.split(\'<td>\'):\n       if len(line) < 30:\n           line = line.strip()\n           r = r+line+\' \'\n       else:\n           line = line.strip()\n           r = r+line+\'\\n\'\n    return r.split(\'\\n\')[1:-1]\n    #url \xec\x86\x8c\xec\x8a\xa4\xec\x97\x90\xec\x84\x9c \xeb\x8d\xb0\xec\x9d\xb4\xed\x84\xb0 \xeb\xb6\x80\xeb\xb6\x84 \xec\xb6\x94\xec\xb6\x9c\n\n\ndef hue2on():\n    global data\n    conn.request("PUT", "/api/newdeveloper/lights/2/state", \'{"on":true}\')\n    responses = conn.getresponse()\n    data = responses.read()\n    time.sleep(2)\n    return redirect(URL(\'index\'))\n\ndef hue2off():\n    global data\n    conn.request("PUT", "/api/newdeveloper/lights/2/state", \'{"on":false}\')\n    responses = conn.getresponse()\n    data = responses.read()\n    time.sleep(2)\n    return redirect(URL(\'index\'))\n\ndef hue2change():\n    global data\n    conn.request("PUT", "/api/newdeveloper/lights/2/state", \'{"on":true, "sat":255, "bri":255, "hue":10000}\')\n    responses = conn.getresponse()\n    data = responses.read()\n    time.sleep(2)\n    #return redirect(URL(\'index\'))\n    \ndef co2get():\n    infile = open(os.path.join(request.folder, \'static\', \'log_tos.log\'))\n    co2=infile.readlines()[-1]\n    infile.close()\n    co2int=int(co2[-10:-5])\n    """\n    global data\n    conn.request("PUT", "/api/newdeveloper/lights/2/state", \'{"on":true, "sat":255, "bri":255, "hue":%d} \'% (co2int*10))\n    responses = conn.getresponse()\n    data = responses.read()\n    time.sleep(2)\n    return dict(co2=co2[-10:-1])\n    """\n    return dict(co2=co2int)\n    \ndef index():\n    global data\n    if len(sys.argv) <> 1:\n        printUsing()\n        sys.exit(1)\n    pnt = "%s \\n" % getDatetime(getDataPage())\n    pnt2 = getDatablocks(getDataPage())\n    pnt3 = ""\n    conn.request("GET", "/api/newdeveloper/lights/2")\n    responses = conn.getresponse()\n    data = responses.read()\n    state2 = data[1:52]\n    #co2=co2get()\n    for i in pnt2:\n        pnt3+=i\n        pnt3+="\\n"\n    return locals()\n\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'httplib'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of BadStatusLine object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of BadStatusLine object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of BadStatusLine object>'
+p19
+sS'__dict__'
+p20
+S'{\'line\': "\'\'"}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of BadStatusLine object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S'<bound method BadStatusLine.__init__ of BadStatusLine("\'\'",)>'
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of BadStatusLine object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of BadStatusLine object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of BadStatusLine object>'
+p35
+sS'__class__'
+p36
+S"<class 'httplib.BadStatusLine'>"
+p37
+sS'__doc__'
+p38
+S'None'
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of BadStatusLine object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of BadStatusLine object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of BadStatusLine object>"
+p45
+sS'args'
+p46
+S'("\'\'",)'
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'line'
+p50
+S'"\'\'"'
+p51
+sS'__unicode__'
+p52
+S'<built-in method __unicode__ of BadStatusLine object>'
+p53
+sS'__delattr__'
+p54
+S"<method-wrapper '__delattr__' of BadStatusLine object>"
+p55
+sS'__repr__'
+p56
+S"<method-wrapper '__repr__' of BadStatusLine object>"
+p57
+sS'__hash__'
+p58
+S"<method-wrapper '__hash__' of BadStatusLine object>"
+p59
+ssS'evalue'
+p60
+S"''"
+p61
+sS'request'
+p62
+cgluon.html
+XML_unpickle
+p63
+(S's\x0cd\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>test0518</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>default</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215-b7913549-5704-4156-88f7-ce5d34b24743<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_test0518</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215-81a8e13b-5356-42c3-bc41-e1323069620c<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">DOCUMENT_ROOT</td><td style="vertical-align:top;">:</td><td><div>/var/www</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">GATEWAY_INTERFACE</td><td style="vertical-align:top;">:</td><td><div>CGI/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTPS</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html, application/xhtml+xml, */*</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>ko-KR</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>Keep-Alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_test0518=203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba; session_id_welcome=203.254.173.215-81a8e13b-5356-42c3-bc41-e1323069620c; session_id_admin=203.254.173.215-b7913549-5704-4156-88f7-ce5d34b24743</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_DNT</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>222.109.80.213</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_TRANSLATED</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>1589</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_URI</td><td style="vertical-align:top;">:</td><td><div>/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_FILENAME</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_ADDR</td><td style="vertical-align:top;">:</td><td><div>192.168.0.2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_ADMIN</td><td style="vertical-align:top;">:</td><td><div>[no address given]</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>222.109.80.213</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SIGNATURE</td><td style="vertical-align:top;">:</td><td><div>&lt;address&gt;Apache/2.2.22 (Debian) Server at 222.109.80.213 Port 443&lt;/address&gt;\n</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Apache/2.2.22 (Debian)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/www-data/web2py/applications/show/&#x27;, &#x27;/home/www-data/web2py/applications/welcome/&#x27;, &#x27;/home/www-data/web2py/applications/test0518/&#x27;, &#x27;/home/www-data/web2py/applications/testJI/&#x27;, &#x27;/home/www-data/web2py/applications/admin/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">document_root</td><td style="vertical-align:top;">:</td><td><div>/var/www</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gateway_interface</td><td style="vertical-align:top;">:</td><td><div>CGI/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html, application/xhtml+xml, */*</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>ko-KR</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>Keep-Alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_test0518=203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba; session_id_welcome=203.254.173.215-81a8e13b-5356-42c3-bc41-e1323069620c; session_id_admin=203.254.173.215-b7913549-5704-4156-88f7-ce5d34b24743</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_dnt</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>222.109.80.213</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">https</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>222.109.80.213</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>raspberrypi</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.application_group</td><td style="vertical-align:top;">:</td><td><div>127.0.1.1|</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.callable_object</td><td style="vertical-align:top;">:</td><td><div>application</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.handler_script</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.input_chunked</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.listener_host</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.listener_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.process_group</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.request_handler</td><td style="vertical-align:top;">:</td><td><div>wsgi-script</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.script_reloading</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>3</div></td></tr><tr><td><div>3</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_application_group</td><td style="vertical-align:top;">:</td><td><div>127.0.1.1|</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_callable_object</td><td style="vertical-align:top;">:</td><td><div>application</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_handler_script</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_input_chunked</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_listener_host</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_listener_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_process_group</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_request_handler</td><td style="vertical-align:top;">:</td><td><div>wsgi-script</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_script_reloading</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>3</div></td></tr><tr><td><div>3</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_translated</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>1589</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_filename</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_addr</td><td style="vertical-align:top;">:</td><td><div>192.168.0.2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_admin</td><td style="vertical-align:top;">:</td><td><div>[no address given]</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>222.109.80.213</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_signature</td><td style="vertical-align:top;">:</td><td><div>&lt;address&gt;Apache/2.2.22 (Debian) Server at 222.109.80.213 Port 443&lt;/address&gt;\n</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Apache/2.2.22 (Debian)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.10.3-stable+timestamp.2015.04.02.21.42.07</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Log object at 0x7a8a53b8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;built-in method file_wrapper of mod_wsgi.Adapter object at 0x7a8ada40&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Input object at 0x7a8a5728&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>https</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Log object at 0x7a8a53b8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;built-in method file_wrapper of mod_wsgi.Adapter object at 0x7a8ada40&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Input object at 0x7a8a5728&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>https</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>1</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/applications/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/www-data/web2py/applications/show/&#x27;, &#x27;/home/www-data/web2py/applications/welcome/&#x27;, &#x27;/home/www-data/web2py/applications/test0518/&#x27;, &#x27;/home/www-data/web2py/applications/testJI/&#x27;, &#x27;/home/www-data/web2py/applications/admin/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>222.109.80.213</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>raspberrypi</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.10.3-stable+timestamp.2015.04.02.21.42.07</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 6, 3, 15, 1, 8, 790148)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/test0518/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 6, 3, 6, 1, 8, 790258)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>test0518/203.254.173.215.2015-06-03.15-01-08.54a56579-bb6c-4f21-b99f-dba1249d6bcd</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x7a8d5430&gt;</div></td></tr></table></div>'
+tRp64
+sS'frames'
+p65
+(lp66
+(dp67
+S'file'
+p68
+S'/home/www-data/web2py/gluon/restricted.py'
+p69
+sS'dump'
+p70
+(dp71
+S'environment'
+p72
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, ...}"
+p73
+sS'ccode'
+p74
+S'<code object <module> at 0x7a8c1410, file "/home...cations/test0518/controllers/default.py", line 1>'
+p75
+ssS'lnum'
+p76
+I227
+sS'lines'
+p77
+(dp78
+I224
+S'            ccode = code'
+p79
+sI225
+S'        else:'
+p80
+sI226
+S'            ccode = compile2(code, layer)'
+p81
+sI227
+S'        exec ccode in environment'
+p82
+sI228
+S'    except HTTP:'
+p83
+sI229
+S'        raise'
+p84
+sI230
+S'    except RestrictedError:'
+p85
+sI231
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p86
+sI222
+S'    try:'
+p87
+sI223
+S'        if isinstance(code, types.CodeType):'
+p88
+ssS'call'
+p89
+S"(code='import os\\nimport sys\\nimport urllib2\\nimport httpl...locals()\\n\\nresponse._vars=response._caller(index)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, ...}, layer='/home/www-data/web2py/applications/test0518/controllers/default.py')"
+p90
+sS'func'
+p91
+S'restricted'
+p92
+sa(dp93
+g68
+S'/home/www-data/web2py/applications/test0518/controllers/default.py'
+p94
+sg70
+(dp95
+sg76
+I106
+sg77
+(dp96
+I96
+S'    conn.request("GET", "/api/newdeveloper/lights/2")'
+p97
+sI97
+S'    responses = conn.getresponse()'
+p98
+sI98
+S'    data = responses.read()'
+p99
+sI99
+S'    state2 = data[1:52]'
+p100
+sI100
+S'    #co2=co2get()'
+p101
+sI101
+S'    for i in pnt2:'
+p102
+sI102
+S'        pnt3+=i'
+p103
+sI103
+S'        pnt3+="\\n"'
+p104
+sI104
+S'    return locals()'
+p105
+sI95
+S'    pnt3 = ""'
+p106
+ssg89
+S'()'
+p107
+sg91
+S'<module>'
+p108
+sa(dp109
+g68
+S'/home/www-data/web2py/gluon/globals.py'
+p110
+sg70
+(dp111
+S'self'
+p112
+S'undefined'
+p113
+sS'f'
+S'<function index>'
+p114
+ssg76
+I393
+sg77
+(dp115
+I388
+S"        self.flash = ''            # used by the default view layout"
+p116
+sI389
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p117
+sI390
+S'        self.menu = []             # used by the default view layout'
+p118
+sI391
+S'        self.files = []            # used by web2py_ajax.html'
+p119
+sI392
+S'        self._vars = None'
+p120
+sI393
+S'        self._caller = lambda f: f()'
+p121
+sI394
+S'        self._view_environment = None'
+p122
+sI395
+S'        self._custom_commit = None'
+p123
+sI396
+S'        self._custom_rollback = None'
+p124
+sI397
+S"        self.generic_patterns = ['*']"
+p125
+ssg89
+S'(f=<function index>)'
+p126
+sg91
+S'<lambda>'
+p127
+sa(dp128
+g68
+S'/home/www-data/web2py/applications/test0518/controllers/default.py'
+p129
+sg70
+(dp130
+S'pnt2'
+p131
+g113
+sS'global getDataPage'
+p132
+S'<function getDataPage>'
+p133
+sS'global getDatablocks'
+p134
+S'<function getDatablocks>'
+p135
+ssg76
+I94
+sg77
+(dp136
+I96
+S'    conn.request("GET", "/api/newdeveloper/lights/2")'
+p137
+sI97
+S'    responses = conn.getresponse()'
+p138
+sI98
+S'    data = responses.read()'
+p139
+sI89
+S'    global data'
+p140
+sI90
+S'    if len(sys.argv) <> 1:'
+p141
+sI91
+S'        printUsing()'
+p142
+sI92
+S'        sys.exit(1)'
+p143
+sI93
+S'    pnt = "%s \\n" % getDatetime(getDataPage())'
+p144
+sI94
+S'    pnt2 = getDatablocks(getDataPage())'
+p145
+sI95
+S'    pnt3 = ""'
+p146
+ssg89
+S'()'
+p147
+sg91
+S'index'
+p148
+sa(dp149
+g68
+S'/home/www-data/web2py/applications/test0518/controllers/default.py'
+p150
+sg70
+(dp151
+S'global getWebpage'
+p152
+S'<function getWebpage>'
+p153
+ssg76
+I22
+sg77
+(dp154
+I17
+S"            ('Referer', referer),"
+p155
+sI18
+S'        ]'
+p156
+sI19
+S'        return opener.open(url).read()'
+p157
+sI20
+S''
+sI21
+S'def getDataPage():'
+p158
+sI22
+S"    return getWebpage('http://www.airkorea.or.kr/index')"
+p159
+sI23
+S'    #url \xea\xb0\x80\xec\xa0\xb8\xec\x98\xa4\xea\xb8\xb0'
+p160
+sI24
+S''
+sI25
+S'def normailize(s):'
+p161
+sI26
+S"    return s.replace('<td>','').replace('</td>','').replace(' ','')"
+p162
+ssg89
+S'()'
+p163
+sg91
+S'getDataPage'
+p164
+sa(dp165
+g68
+S'/home/www-data/web2py/applications/test0518/controllers/default.py'
+p166
+sg70
+(dp167
+S'url'
+p168
+S"'http://www.airkorea.or.kr/index'"
+p169
+sS'opener'
+p170
+S'<urllib2.OpenerDirector instance>'
+p171
+sS'opener.open'
+p172
+S'<bound method OpenerDirector.open of <urllib2.OpenerDirector instance>>'
+p173
+sS').read'
+p174
+g113
+ssg76
+I19
+sg77
+(dp175
+I14
+S'        opener = urllib2.build_opener()'
+p176
+sI15
+S'        opener.addheaders = ['
+p177
+sI16
+S"            ('User-Agent', 'Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US)'),"
+p178
+sI17
+S"            ('Referer', referer),"
+p179
+sI18
+S'        ]'
+p180
+sI19
+S'        return opener.open(url).read()'
+p181
+sI20
+S''
+sI21
+S'def getDataPage():'
+p182
+sI22
+S"    return getWebpage('http://www.airkorea.or.kr/index')"
+p183
+sI23
+S'    #url \xea\xb0\x80\xec\xa0\xb8\xec\x98\xa4\xea\xb8\xb0'
+p184
+ssg89
+S"(url='http://www.airkorea.or.kr/index', referer='')"
+p185
+sg91
+S'getWebpage'
+p186
+sa(dp187
+g68
+S'/usr/lib/python2.7/urllib2.py'
+p188
+sg70
+(dp189
+S'self'
+p190
+S'<urllib2.OpenerDirector instance>'
+p191
+sS'req'
+p192
+S'<urllib2.Request instance>'
+p193
+sS'data'
+p194
+S'None'
+p195
+sS'response'
+p196
+g113
+sS'self._open'
+p197
+S'<bound method OpenerDirector._open of <urllib2.OpenerDirector instance>>'
+p198
+ssg76
+I401
+sg77
+(dp199
+I396
+S'        meth_name = protocol+"_request"'
+p200
+sI397
+S'        for processor in self.process_request.get(protocol, []):'
+p201
+sI398
+S'            meth = getattr(processor, meth_name)'
+p202
+sI399
+S'            req = meth(req)'
+p203
+sI400
+S''
+sI401
+S'        response = self._open(req, data)'
+p204
+sI402
+S''
+sI403
+S'        # post-process response'
+p205
+sI404
+S'        meth_name = protocol+"_response"'
+p206
+sI405
+S'        for processor in self.process_response.get(protocol, []):'
+p207
+ssg89
+S"(self=<urllib2.OpenerDirector instance>, fullurl='http://www.airkorea.or.kr/index', data=None, timeout=<object object>)"
+p208
+sg91
+S'open'
+p209
+sa(dp210
+g68
+S'/usr/lib/python2.7/urllib2.py'
+p211
+sg70
+(dp212
+S'req'
+p213
+S'<urllib2.Request instance>'
+p214
+ssg76
+I419
+sg77
+(dp215
+I416
+S''
+sI417
+S'        protocol = req.get_type()'
+p216
+sI418
+S'        result = self._call_chain(self.handle_open, protocol, protocol +'
+p217
+sI419
+S"                                  '_open', req)"
+p218
+sI420
+S'        if result:'
+p219
+sI421
+S'            return result'
+p220
+sI422
+S''
+sI423
+S"        return self._call_chain(self.handle_open, 'unknown',"
+p221
+sI414
+S'        if result:'
+p222
+sI415
+S'            return result'
+p223
+ssg89
+S'(self=<urllib2.OpenerDirector instance>, req=<urllib2.Request instance>, data=None)'
+p224
+sg91
+S'_open'
+p225
+sa(dp226
+g68
+S'/usr/lib/python2.7/urllib2.py'
+p227
+sg70
+(dp228
+S'args'
+p229
+S'(<urllib2.Request instance>,)'
+p230
+sS'result'
+p231
+g113
+sS'func'
+p232
+S'<bound method HTTPHandler.http_open of <urllib2.HTTPHandler instance>>'
+p233
+ssg76
+I379
+sg77
+(dp234
+I374
+S'        # could.  Otherwise, they return the response.'
+p235
+sI375
+S'        handlers = chain.get(kind, ())'
+p236
+sI376
+S'        for handler in handlers:'
+p237
+sI377
+S'            func = getattr(handler, meth_name)'
+p238
+sI378
+S''
+sI379
+S'            result = func(*args)'
+p239
+sI380
+S'            if result is not None:'
+p240
+sI381
+S'                return result'
+p241
+sI382
+S''
+sI383
+S'    def open(self, fullurl, data=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT):'
+p242
+ssg89
+S"(self=<urllib2.OpenerDirector instance>, chain={'file': [<urllib2.FileHandler instance>], 'ftp': [<urllib2.FTPHandler instance>], 'http': [<urllib2.HTTPHandler instance>], 'https': [<urllib2.HTTPSHandler instance>], 'unknown': [<urllib2.UnknownHandler instance>]}, kind='http', meth_name='http_open', *args=(<urllib2.Request instance>,))"
+p243
+sg91
+S'_call_chain'
+p244
+sa(dp245
+g68
+S'/usr/lib/python2.7/urllib2.py'
+p246
+sg70
+(dp247
+S'self'
+p248
+S'<urllib2.HTTPHandler instance>'
+p249
+sS'req'
+p250
+S'<urllib2.Request instance>'
+p251
+sS'global httplib'
+p252
+S"<module 'httplib' from '/usr/lib/python2.7/httplib.pyc'>"
+p253
+sS'self.do_open'
+p254
+S'<bound method HTTPHandler.do_open of <urllib2.HTTPHandler instance>>'
+p255
+sS'httplib.HTTPConnection'
+p256
+S'<class httplib.HTTPConnection>'
+p257
+ssg76
+I1211
+sg77
+(dp258
+I1206
+S''
+sI1207
+S''
+sI1208
+S'class HTTPHandler(AbstractHTTPHandler):'
+p259
+sI1209
+S''
+sI1210
+S'    def http_open(self, req):'
+p260
+sI1211
+S'        return self.do_open(httplib.HTTPConnection, req)'
+p261
+sI1212
+S''
+sI1213
+S'    http_request = AbstractHTTPHandler.do_request_'
+p262
+sI1214
+S''
+sI1215
+S"if hasattr(httplib, 'HTTPS'):"
+p263
+ssg89
+S'(self=<urllib2.HTTPHandler instance>, req=<urllib2.Request instance>)'
+p264
+sg91
+S'http_open'
+p265
+sa(dp266
+g68
+S'/usr/lib/python2.7/urllib2.py'
+p267
+sg70
+(dp268
+S'h'
+S'<httplib.HTTPConnection instance>'
+p269
+sS'buffering'
+p270
+g113
+sS'r'
+g113
+sS'builtinTrue'
+p271
+S'True'
+p272
+sS'h.getresponse'
+p273
+S'<bound method HTTPConnection.getresponse of <httplib.HTTPConnection instance>>'
+p274
+ssg76
+I1184
+sg77
+(dp275
+I1184
+S'                r = h.getresponse(buffering=True)'
+p276
+sI1185
+S'            except TypeError: # buffering kw not supported'
+p277
+sI1186
+S'                r = h.getresponse()'
+p278
+sI1187
+S''
+sI1188
+S'        # Pick apart the HTTPResponse object to get the addinfourl'
+p279
+sI1179
+S'        except socket.error, err: # XXX what error?'
+p280
+sI1180
+S'            h.close()'
+p281
+sI1181
+S'            raise URLError(err)'
+p282
+sI1182
+S'        else:'
+p283
+sI1183
+S'            try:'
+p284
+ssg89
+S'(self=<urllib2.HTTPHandler instance>, http_class=<class httplib.HTTPConnection>, req=<urllib2.Request instance>)'
+p285
+sg91
+S'do_open'
+p286
+sa(dp287
+g68
+S'/usr/lib/python2.7/httplib.py'
+p288
+sg70
+(dp289
+S'response.begin'
+p290
+S'<bound method HTTPResponse.begin of <httplib.HTTPResponse instance>>'
+p291
+sS'response'
+p292
+S'<httplib.HTTPResponse instance>'
+p293
+ssg76
+I1034
+sg77
+(dp294
+I1029
+S'            #only add this keyword if non-default, for compatibility with'
+p295
+sI1030
+S'            #other response_classes.'
+p296
+sI1031
+S'            kwds["buffering"] = True;'
+p297
+sI1032
+S'        response = self.response_class(*args, **kwds)'
+p298
+sI1033
+S''
+sI1034
+S'        response.begin()'
+p299
+sI1035
+S'        assert response.will_close != _UNKNOWN'
+p300
+sI1036
+S'        self.__state = _CS_IDLE'
+p301
+sI1037
+S''
+sI1038
+S'        if response.will_close:'
+p302
+ssg89
+S'(self=<httplib.HTTPConnection instance>, buffering=True)'
+p303
+sg91
+S'getresponse'
+p304
+sa(dp305
+g68
+S'/usr/lib/python2.7/httplib.py'
+p306
+sg70
+(dp307
+S'status'
+p308
+g113
+sS'reason'
+p309
+g113
+sS'version'
+p310
+g113
+sS'self'
+p311
+S'<httplib.HTTPResponse instance>'
+p312
+sS'self._read_status'
+p313
+S'<bound method HTTPResponse._read_status of <httplib.HTTPResponse instance>>'
+p314
+ssg76
+I407
+sg77
+(dp315
+I402
+S"            # we've already started reading the response"
+p316
+sI403
+S'            return'
+p317
+sI404
+S''
+sI405
+S'        # read until we get a non-100 response'
+p318
+sI406
+S'        while True:'
+p319
+sI407
+S'            version, status, reason = self._read_status()'
+p320
+sI408
+S'            if status != CONTINUE:'
+p321
+sI409
+S'                break'
+p322
+sI410
+S'            # skip the header from the 100 response'
+p323
+sI411
+S'            while True:'
+p324
+ssg89
+S'(self=<httplib.HTTPResponse instance>)'
+p325
+sg91
+S'begin'
+p326
+sa(dp327
+g68
+S'/usr/lib/python2.7/httplib.py'
+p328
+sg70
+(dp329
+S'line'
+p330
+S"''"
+p331
+sS'global BadStatusLine'
+p332
+S"<class 'httplib.BadStatusLine'>"
+p333
+ssg76
+I371
+sg77
+(dp334
+I366
+S'        if self.debuglevel > 0:'
+p335
+sI367
+S'            print "reply:", repr(line)'
+p336
+sI368
+S'        if not line:'
+p337
+sI369
+S'            # Presumably, the server closed the connection before'
+p338
+sI370
+S'            # sending a valid response.'
+p339
+sI371
+S'            raise BadStatusLine(line)'
+p340
+sI372
+S'        try:'
+p341
+sI373
+S'            [version, status, reason] = line.split(None, 2)'
+p342
+sI374
+S'        except ValueError:'
+p343
+sI375
+S'            try:'
+p344
+ssg89
+S'(self=<httplib.HTTPResponse instance>)'
+p345
+sg91
+S'_read_status'
+p346
+sasS'pyver'
+p347
+S'Python 2.7.3: /usr/bin/python (prefix: /usr)'
+p348
+sS'session'
+p349
+g63
+(S's\x1a\x00\x00\x00<div><table></table></div>'
+tRp350
+sS'etype'
+p351
+S"<class 'httplib.BadStatusLine'>"
+p352
+sS'date'
+p353
+S'Wed Jun  3 15:01:10 2015'
+p354
+sS'response'
+p355
+g63
+(S's\x9d2\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x7a8d52a0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_test0518</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">google_analytics_id</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">logo</td><td style="vertical-align:top;">:</td><td><div><a class="brand" href="http://www.web2py.com/"><b>web<span>2</span>py</b>&trade;&nbsp;</a></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div><table><tr><td><div>Home</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/test0518/default/index</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div><span class="highlighted">web2py</span></div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>http://web2py.com</div></td></tr><tr><td><div><table><tr><td><div><table><tr><td><div>My Sites</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/admin/default/site</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>This App</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/admin/default/design/test0518</div></td></tr><tr><td><div>[(&lt;lazyT &#x27;Controller&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/controllers/default.py&#x27;), (&lt;lazyT &#x27;View&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/views/default/index.html&#x27;), (&lt;lazyT &#x27;Layout&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/views/layout.html&#x27;), (&lt;lazyT &#x27;Stylesheet&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/static/css/web2py.css&#x27;), (&lt;lazyT &#x27;DB Model&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/models/db.py&#x27;), (&lt;lazyT &#x27;Menu Model&#x27;&gt;, False, &#x27;/admin/default/edit/test0518/models/menu.py&#x27;), (&lt;lazyT &#x27;Database&#x27;&gt;, False, &#x27;/test0518/appadmin/index&#x27;), (&lt;lazyT &#x27;Errors&#x27;&gt;, False, &#x27;/admin/default/errors/test0518&#x27;), (&lt;lazyT &#x27;About&#x27;&gt;, False, &#x27;/admin/default/about/test0518&#x27;)]</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>web2py.com</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>http://www.web2py.com</div></td></tr><tr><td><div>[(&lt;lazyT &#x27;Download&#x27;&gt;, False, &#x27;http://www.web2py.com/examples/default/download&#x27;), (&lt;lazyT &#x27;Support&#x27;&gt;, False, &#x27;http://www.web2py.com/examples/default/support&#x27;), (&lt;lazyT &#x27;Demo&#x27;&gt;, False, &#x27;http://web2py.com/demo_admin&#x27;), (&lt;lazyT &#x27;Quick Examples&#x27;&gt;, False, &#x27;http://web2py.com/examples/default/examples&#x27;), (&lt;lazyT &#x27;FAQ&#x27;&gt;, False, &#x27;http://web2py.com/AlterEgo&#x27;), (&lt;lazyT &#x27;Videos&#x27;&gt;, False, &#x27;http://www.web2py.com/examples/default/videos/&#x27;), (&lt;lazyT &#x27;Free Applications&#x27;&gt;, False, &#x27;http://web2py.com/appliances&#x27;), (&lt;lazyT &#x27;Plugins&#x27;&gt;, False, &#x27;http://web2py.com/plugins&#x27;), (&lt;lazyT &#x27;Layouts&#x27;&gt;, False, &#x27;http://web2py.com/layouts&#x27;), (&lt;lazyT &#x27;Recipes&#x27;&gt;, False, &#x27;http://web2pyslices.com/&#x27;), (&lt;lazyT &#x27;Semantic&#x27;&gt;, False, &#x27;http://web2py.com/semantic&#x27;)]</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Documentation</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>http://www.web2py.com/book</div></td></tr><tr><td><div>[(&lt;lazyT &#x27;Preface&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/00&#x27;), (&lt;lazyT &#x27;Introduction&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/01&#x27;), (&lt;lazyT &#x27;Python&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/02&#x27;), (&lt;lazyT &#x27;Overview&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/03&#x27;), (&lt;lazyT &#x27;The Core&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/04&#x27;), (&lt;lazyT &#x27;The Views&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/05&#x27;), (&lt;lazyT &#x27;Database&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/06&#x27;), (&lt;lazyT &#x27;Forms and Validators&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/07&#x27;), (&lt;lazyT &#x27;Email and SMS&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/08&#x27;), (&lt;lazyT &#x27;Access Control&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/09&#x27;), (&lt;lazyT &#x27;Services&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/10&#x27;), (&lt;lazyT &#x27;Ajax Recipes&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/11&#x27;), (&lt;lazyT &#x27;Components and Plugins&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/12&#x27;), (&lt;lazyT &#x27;Deployment Recipes&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/13&#x27;), (&lt;lazyT &#x27;Other Recipes&#x27;&gt;, False, &#x27;http://www.web2py.com/book/default/chapter/14&#x27;), (&lt;lazyT &#x27;Buy this book&#x27;&gt;, False, &#x27;http://stores.lulu.com/web2py&#x27;)]</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Community</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>None</div></td></tr><tr><td><div>[(&lt;lazyT &#x27;Groups&#x27;&gt;, False, &#x27;http://www.web2py.com/examples/default/usergroups&#x27;), (&lt;lazyT &#x27;Twitter&#x27;&gt;, False, &#x27;http://twitter.com/web2py&#x27;), (&lt;lazyT &#x27;Live Chat&#x27;&gt;, False, &#x27;http://webchat.freenode.net/?channels=web2py&#x27;)]</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Plugins</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>None</div></td></tr><tr><td><div>[(&#x27;plugin_wiki&#x27;, False, &#x27;http://web2py.com/examples/default/download&#x27;), (&lt;lazyT &#x27;Other Plugins&#x27;&gt;, False, &#x27;http://web2py.com/plugins&#x27;), (&lt;lazyT &#x27;Layout Plugins&#x27;&gt;, False, &#x27;http://web2py.com/layouts&#x27;)]</div></td></tr></table></div></td></tr></table></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">author</td><td style="vertical-align:top;">:</td><td><div>Your Name &lt;you@example.com&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generator</td><td style="vertical-align:top;">:</td><td><div>Web2py Web Framework</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">keywords</td><td style="vertical-align:top;">:</td><td><div>web2py, python, framework</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^default/\\w+\\.py$</div></td></tr><tr><td><div>^default/index/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_test0518</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/home/www-data/web2py/applications/test0518/sessions/003/023/203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba&#x27;, mode &#x27;rb+&#x27; at 0x7a738288&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/applications/test0518/sessions/203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>6d7d7eb07e9dc380d110635d28f7b57b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>203.254.173.215-d8b6a77b-a575-4873-ace9-0142478b79ba</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_test0518</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>test0518</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subtitle</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">title</td><td style="vertical-align:top;">:</td><td><div>Test0518</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>default/index.html</div></td></tr></table></div>'
+tRp356
+sS'locals'
+p357
+(dp358
+S'self'
+p359
+S'<httplib.HTTPResponse instance>'
+p360
+sg50
+S"''"
+p361
+sssS'traceback'
+p362
+S'Traceback (most recent call last):\n  File "/home/www-data/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/www-data/web2py/applications/test0518/controllers/default.py", line 106, in <module>\n  File "/home/www-data/web2py/gluon/globals.py", line 393, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/www-data/web2py/applications/test0518/controllers/default.py", line 94, in index\n    pnt2 = getDatablocks(getDataPage())\n  File "/home/www-data/web2py/applications/test0518/controllers/default.py", line 22, in getDataPage\n    return getWebpage(\'http://www.airkorea.or.kr/index\')\n  File "/home/www-data/web2py/applications/test0518/controllers/default.py", line 19, in getWebpage\n    return opener.open(url).read()\n  File "/usr/lib/python2.7/urllib2.py", line 401, in open\n    response = self._open(req, data)\n  File "/usr/lib/python2.7/urllib2.py", line 419, in _open\n    \'_open\', req)\n  File "/usr/lib/python2.7/urllib2.py", line 379, in _call_chain\n    result = func(*args)\n  File "/usr/lib/python2.7/urllib2.py", line 1211, in http_open\n    return self.do_open(httplib.HTTPConnection, req)\n  File "/usr/lib/python2.7/urllib2.py", line 1184, in do_open\n    r = h.getresponse(buffering=True)\n  File "/usr/lib/python2.7/httplib.py", line 1034, in getresponse\n    response.begin()\n  File "/usr/lib/python2.7/httplib.py", line 407, in begin\n    version, status, reason = self._read_status()\n  File "/usr/lib/python2.7/httplib.py", line 371, in _read_status\n    raise BadStatusLine(line)\nBadStatusLine: \'\'\n'
+p363
+s.

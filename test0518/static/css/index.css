@@ -1,0 +1,39 @@
+.container {
+  margin-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.jumbotron {
+  text-align: center;
+}
+
+.jumbotron > h1 {
+  color: navy;
+}
+
+.jumbotron > p {
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+.page-header {
+  margin-top: 100px;
+}
+
+#profile-description {
+  text-align: center;
+}
+
+#profile-photo {
+  width: 80%;
+}
+
+#card {
+    width: 90%;
+}
+
+#chartdiv {
+	width	: 100%;
+	height	: 500px;
+}
