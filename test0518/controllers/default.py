@@ -20,17 +20,17 @@ def getWebpage(url, referer=''):
 
 def getDataPage():
     return getWebpage('http://www.airkorea.or.kr/index')
-    #url 가져오기
+    #url 가?�오�?
     
 def normailize(s):
     return s.replace('<td>','').replace('</td>','').replace(' ','')
-    #불필요한 코드 제거
+    #불필?�한 코드 ?�거
 def printUsing():
     print sys.argv[0], '<output file name>'
 
 def getDatetime(buffers):
     return buffers.split('<p class="now_time">')[1].split('<strong>')[1].split('</strong>')[0]
-    #url 소스에서 날짜 부분 추출
+    #url ?�스?�서 ?�짜 부�?추출
 def getDatablocks(buffers):
     a = buffers.split('<tbody id="mt_mmc2_10007">')[1]
     b = a.split('</tbody>')[0].replace('<tr>','').replace('</tr>','').replace('</td>','')
@@ -43,7 +43,7 @@ def getDatablocks(buffers):
            line = line.strip()
            r = r+line+'\n'
     return r.split('\n')[1:-1]
-    #url 소스에서 데이터 부분 추출
+    #url ?�스?�서 ?�이??부�?추출
 
 
 def hue2on():
@@ -74,7 +74,7 @@ def co2get():
     infile = open(os.path.join(request.folder, 'static', 'log_tos.log'))
     co2=infile.readlines()[-1]
     infile.close()
-    co2int=int(co2[-10:-5])
+    co2int=int(co2[-9:-5])
     """
     global data
     conn.request("PUT", "/api/newdeveloper/lights/2/state", '{"on":true, "sat":255, "bri":255, "hue":%d} '% (co2int*10))
