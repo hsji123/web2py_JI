@@ -142,7 +142,10 @@ while 1:
 	if not in_byte[9] is 'm':
 		shift_byte = checkAlignment(in_byte)
 		in_byte = shift_byte
-		
+	if in_byte[2] == 'm':
+		continue
+	if in_byte[2] == 'M':
+		continue	
 	if ('ppm' in in_byte):
 		if DEBUG_PRINT :
 			print '-----\/---------\/------ DEBUG_PRINT set -----\/---------\/------ '
